@@ -3,7 +3,8 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('public'));
+// 현재 폴더(루트)에서 index.html 및 정적 파일을 찾도록 설정
+app.use(express.static(__dirname));
 
 const rooms = {}; 
 
@@ -44,7 +45,6 @@ io.on('connection', (socket) => {
         if(room.settings) { socket.emit('sync_lobby', room.settings); }
     });
 
-    // ⭐ 로비 안에서 설정 변경 시 실시간 동기화
     socket.on('sync_lobby', (data) => {
         if(rooms[data.roomId]) {
             rooms[data.roomId].settings = data;
@@ -52,7 +52,6 @@ io.on('connection', (socket) => {
         }
     });
 
-    // ⭐ 게임 시작 시 흑/백 배정 및 개별 시간 할당
     socket.on('start_game', (data) => {
         let room = rooms[data.roomId];
         if (room) {
@@ -68,7 +67,6 @@ io.on('connection', (socket) => {
                 colors[room.players[1].id] = p2Color;
             }
 
-            // 방장(1P)의 색상에 맞춰 1P 설정시간 부여
             let whiteTime = p1Color === 'white' ? data.p1Time : data.p2Time;
             let blackTime = p1Color === 'black' ? data.p1Time : data.p2Time;
 
