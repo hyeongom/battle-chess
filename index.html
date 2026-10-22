@@ -815,11 +815,11 @@
             if (data.isDodge) {
                 showFloatText(data.toR, data.toC, "회피!", 'dodge'); 
                 logMessage(`💨 [회피] ${defName}, 공격 피함!`);
-                if (targetSquare.children[0]) targetSquare.children[0].classList.add('dodge-anim');
-                setTimeout(() => { if(targetSquare.children[0]) targetSquare.children[0].classList.remove('dodge-anim'); checkAfterAttack(data, attacker, defender); }, 600);
+                if (targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.add('dodge-anim');
+                setTimeout(() => { if(targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.remove('dodge-anim'); checkAfterAttack(data, attacker, defender); }, 600);
             } else {
-                defender.hp -= data.dmg; showFloatText(data.toR, data.toC, data.isCrit ? 'CRITICAL!' : `-${data.dmg}`, data.isCrit ? 'crit' : 'dmg'); renderBoard(); targetSquare.children[0].classList.add('shake');
-                setTimeout(() => { if(targetSquare.children[0]) targetSquare.children[0].classList.remove('shake'); }, 400);
+                defender.hp -= data.dmg; renderBoard(); showFloatText(data.toR, data.toC, data.isCrit ? 'CRITICAL!' : `-${data.dmg}`, data.isCrit ? 'crit' : 'dmg'); targetSquare.querySelector('.piece').classList.add('shake');
+                setTimeout(() => { if(targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.remove('shake'); }, 400);
                 
                 if(data.isCrit) logMessage(`💥 [치명타] ${attName} (${moveStr}) 👉 ${defName}에게 즉사급 피해!`);
                 else logMessage(`⚔️ [공격] ${attName} (${moveStr}) 👉 ${defName}에게 ${data.dmg} 피해`);
@@ -855,10 +855,10 @@
             if (cData.isDodge) {
                 showFloatText(data.fromR, data.fromC, "회피!", 'dodge'); 
                 logMessage(`💨 [회피] ${attName}, 반격 피함!`);
-                if (targetSquare.children[0]) targetSquare.children[0].classList.add('dodge-anim'); setTimeout(() => { if(targetSquare.children[0]) targetSquare.children[0].classList.remove('dodge-anim'); endTurn(); }, 600);
+                if (targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.add('dodge-anim'); setTimeout(() => { if(targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.remove('dodge-anim'); endTurn(); }, 600);
             } else {
-                originalAttacker.hp -= cData.dmg; showFloatText(data.fromR, data.fromC, cData.isCrit ? 'CRITICAL!' : `-${cData.dmg}`, cData.isCrit ? 'crit' : 'dmg'); renderBoard(); targetSquare.children[0].classList.add('shake');
-                setTimeout(() => { if(targetSquare.children[0]) targetSquare.children[0].classList.remove('shake'); }, 400);
+                originalAttacker.hp -= cData.dmg; renderBoard(); showFloatText(data.fromR, data.fromC, cData.isCrit ? 'CRITICAL!' : `-${cData.dmg}`, cData.isCrit ? 'crit' : 'dmg'); targetSquare.querySelector('.piece').classList.add('shake');
+                setTimeout(() => { if(targetSquare.querySelector('.piece')) targetSquare.querySelector('.piece').classList.remove('shake'); }, 400);
                 
                 if(cData.isCrit) logMessage(`💥 [반격-치명타] ${defName} 👉 ${attName}에게 치명타!`);
                 else logMessage(`🔥 [반격] ${defName} 👉 ${attName}에게 ${cData.dmg} 피해!`);
